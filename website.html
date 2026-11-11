@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <link rel="styling" href="web-css.css">
-    <link rel="function" href="Functionilaity.js">
+    <script src="Functionilaity.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug's spotify factory</title>
@@ -10,16 +10,23 @@
 <body>
 
 <sidebar>
-    <div class="menuitem">Non-internett music player</div>
-    <div class="menuitem">internett music player</div>
+    <div class="menuitem" id="no-wifi">Non-internett music player</div>
+    <div class="menuitem" id="wifi">internett music player</div>
 </sidebar>
 
 <div class="main cointainer">
-    <div class="seciton" id="youtube-section">
+    <div class="seciton" id="song-seleciton">
         <h1 class="information">Play your songs</h1>
         <div class="youtube-display">
             <input type="text" id="yt-url" placeholder="Paste url here">
+            <button onclick="playvideo()">Play</button>
 
+        </div>
+    </div>
+    <div class="section" id="display-section">
+        <h2>Your songs</h2>
+        <div class="container" id="video-container">
+            
         </div>
     </div>
     
