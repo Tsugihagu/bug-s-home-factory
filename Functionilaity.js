@@ -59,10 +59,7 @@ async function saveVideo() {
         return;
     }
 
-    try {
-        console.log("Trying to retrieve YouTube title...");
-
-       
+    try {       
         let originalURL = `https://www.youtube.com/watch?v=${videoId}`;
 
         let response = await fetch(
@@ -74,7 +71,7 @@ async function saveVideo() {
         }
 
         let data = await response.json();
-        console.log("YouTube response:", data);
+        
 
      
         savesongs(data.title, videoId);
@@ -84,7 +81,7 @@ async function saveVideo() {
     } catch (error) {
 
         alert("Couldn't retrieve the video title!");
-        console.error(error);
+        
 
     }
 }
@@ -95,25 +92,43 @@ function displaysongs(song){
 
     song.forEach((song,index) => {
         let songElement = document.createElement("div")
-
         songElement.className = "song";
 
-        songElement.innerHTML = `
-            <span>${song.title}</span>
+        let title = document.createElement("span");
+        title.textContent = song.title
 
-            <button onclick="playSong(${index})">
-                Play
-            </button>
+        let playbutton = document.createElement("button");
+        playbutton.textContent = "play";
+        playbutton.onclick = () => playsong(index);
 
-            <button onclick="deleteSong(${index})">
-                Delete
-            </button>
-        `;   
+        let deletebutton = document.createElement("button");
+        deletebutton.textContent = "delete";
+        deletebutton.onclick = () => deletesong(index);
 
+        songElement.append(title, playbutton, deletebutton);
         songcontainer.appendChild(songElement);
+
 
     });
 
+}
+
+function playsong(index){
+    let song = songs[index];
+    let player = document.getElementById("playsong");
+
+    player.innerHTML = `<iframe 
+    height="100"
+    width="50%"
+    src="https://www.youtube.com/embed/${song.url}?autoplay=1"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>`;
+}
+
+function deletesong(index){
+    songs.splice(index, 1);
+    displaysongs(songs);
+    document.getElementById("playsong").innerHTML = "";
 }
 
 let songs = [];
