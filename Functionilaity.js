@@ -117,28 +117,36 @@ function playsong(index){
     let song = songs[index];
     let player = document.getElementById("playsong");
 
-    player.innerHTML = `<iframe 
-    height="100"
-    width="50%"
-    src="https://www.youtube.com/embed/${song.url}?autoplay=1"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-    </iframe>`;
+    player.innerHTML =  `
+        <img src="https://img.youtube.com/vi/${song.url}/hqdefault.jpg" width="320">
+        <p id="now-title"></p>
+        <iframe width="320" height="180"
+            src="https://www.youtube.com/embed/${song.url}?autoplay=1"
+            allow="autoplay; encrypted-media"></iframe>
+    `;
+    document.getElementById("now-title").textContent = song.title;
 }
 
 function deletesong(index){
     songs.splice(index, 1);
+    window.pywebview.api.save_songs(songs);
     displaysongs(songs);
     document.getElementById("playsong").innerHTML = "";
 }
 
 let songs = [];
 
-function savesongs(title, url){
-
-    songs.push({
-        title: title,
-        url: url
-    });
+window.addEventListener("pywebviewready", async () => {
+    songs = await window.pywebview.api.load_songs();
     displaysongs(songs);
+});
+
+
+function savesongs(title, url){
+    songs.push({ title: title, url: url })
+    window.pywebview.api.save_songs(songs);
+    displaysongs(songs)
+
+
 }
 
