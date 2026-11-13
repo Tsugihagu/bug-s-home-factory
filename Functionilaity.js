@@ -122,6 +122,7 @@ let tag = document.createElement("script");
 tag.src = "https://www.youtube.com/iframe_api";
 document.head.appendChild(tag);
 
+let isplaying = false;
 
 function playsong(index) {
     let song = songs[index];
@@ -141,10 +142,26 @@ function playsong(index) {
         videoId: song.url,
         playerVars: { autoplay: 1 },
         events: {
-            onReady: (e) => e.target.setVolume(currentVolume)
+            onReady: (e) => e.target.setVolume(currentVolume),
+            onStateChange: (e) => {
+                isPlaying = (e.data === YT.PlayerState.PLAYING);
+            }
+            
         }
     });
+
 }
+document.getElementById("pause-b").addEventListener("click", () =>{
+    if (!ytPlayer) return;
+
+    if (isPlaying){
+        ytPlayer.pauseVideo()
+    }
+    else{
+        ytPlayer.playVideo()
+    }
+});
+
 
 function deletesong(index) {
     songs.splice(index, 1);
@@ -176,3 +193,4 @@ document.getElementById("volumeslide").addEventListener("input", (e) => {
     currentVolume = Number(e.currentTarget.value);
     if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(currentVolume);
 });
+
