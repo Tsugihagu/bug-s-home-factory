@@ -31,7 +31,8 @@ async function saveVideo() {
             } else if (
                 url.hostname === "youtube.com" ||
                 url.hostname === "www.youtube.com" ||
-                url.hostname === "m.youtube.com"
+                url.hostname === "music.youtube.com" ||
+                url.hostname === "m.youtube.com" 
             ) {
 
                 videoId = url.searchParams.get("v") || "";
@@ -113,26 +114,47 @@ function displaysongs(song){
 
 }
 
-function playsong(index){
-    let song = songs[index];
-    let player = document.getElementById("playsong");
 
-    player.innerHTML =  `
-        <img src="https://img.youtube.com/vi/${song.url}/hqdefault.jpg" width="320">
-        <p id="now-title"></p>
-        <iframe width="320" height="180"
-            src="https://www.youtube.com/embed/${song.url}?autoplay=1"
-            allow="autoplay; encrypted-media"></iframe>
-    `;
+let ytPlayer = null;
+let currentVolume = 50;
+
+let tag = document.createElement("script");
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+
+function playsong(index) {
+    let song = songs[index];
+
     document.getElementById("now-title").textContent = song.title;
+    document.getElementById("thumbnail").src =
+        `https://img.youtube.com/vi/${song.url}/hqdefault.jpg`;
+
+    if (ytPlayer) {
+        ytPlayer.loadVideoById(song.url);   // reuse the player
+        return;
+    }
+
+    ytPlayer = new YT.Player("yt-player", {
+        height: "250",
+        width: "50%",
+        videoId: song.url,
+        playerVars: { autoplay: 1 },
+        events: {
+            onReady: (e) => e.target.setVolume(currentVolume)
+        }
+    });
 }
 
-function deletesong(index){
+function deletesong(index) {
     songs.splice(index, 1);
     window.pywebview.api.save_songs(songs);
     displaysongs(songs);
-    document.getElementById("playsong").innerHTML = "";
-}
+
+    if (ytPlayer) ytPlayer.stopVideo();
+    document.getElementById("now-title").textContent = "";
+    document.getElementById("thumbnail").removeAttribute("src");
+};
 
 let songs = [];
 
@@ -150,3 +172,7 @@ function savesongs(title, url){
 
 }
 
+document.getElementById("volumeslide").addEventListener("input", (e) => {
+    currentVolume = Number(e.currentTarget.value);
+    if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(currentVolume);
+});
