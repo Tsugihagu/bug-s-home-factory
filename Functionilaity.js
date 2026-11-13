@@ -131,7 +131,7 @@ function playsong(index) {
         `https://img.youtube.com/vi/${song.url}/hqdefault.jpg`;
 
     if (ytPlayer) {
-        ytPlayer.loadVideoById(song.url);   // reuse the player
+        ytPlayer.loadVideoById(song.url);  
         return;
     }
 
