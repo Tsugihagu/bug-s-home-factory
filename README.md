@@ -4,9 +4,9 @@ That is if I actually keep updating this project or abandoned it.. I've got no c
 
 Found out what I wanna do with this project:
 
-Its going to be a spotify-ish gui letting the user be able to paste in url's (from websites like yt) making them be able to that video like its an mp3 file. This will be spotify with network.
+Its going to be a spotify-ish gui letting the user be able to paste in url's (from websites like yt) playing that video like its an mp3 file. This will be spotify with network.
 
-There will also be a function that lets the user paste  in both mp3 files and mp4 files(locally from your pc of course), letting the user be able to watch/listen to the videos even without internett access.
+There will also be a function that lets the user paste  in both mp3 files and mp4 files(locally from your pc of course), letting the user be able to watch/listen to the videos even without internett access. Though, I am speculating if I should just add a function that auto downloads all the videos you save on the program as mp3 files but we'll see.
 
 Keep in mind that I did NOT code all of this by hand, I am not experienced enough nor am I actually good enough to code this without any help or anything. What I am trying to say is that I AI in order to code my program (though Im actively trying my hardest to code on my own, which I always do first, but if I cannot figure it out I turn to ai or other websites)
 
