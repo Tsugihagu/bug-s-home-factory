@@ -3,7 +3,7 @@ import os
 import json
 
 base = os.path.dirname(os.path.abspath(__file__))
-html_webiste = os.path.join(base, "website.html")
+html_webiste = os.path.join(base, "index.html")
 song_file = os.path.join(base, "songs.json")
 
 
