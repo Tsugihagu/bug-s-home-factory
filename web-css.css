@@ -1,0 +1,13 @@
+#pause-b{
+    width: 2rem;
+}
+
+.symbol-m{
+    fill: #ffff;
+}
+
+
+
+#playcircle{
+    visibility: hidden;
+}

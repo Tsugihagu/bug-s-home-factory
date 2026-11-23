@@ -1,3 +1,6 @@
+gsap.registerPlugin(MorphSVGPlugin);
+
+
 
 async function saveVideo() {
 
@@ -145,6 +148,11 @@ function playsong(index) {
             onReady: (e) => e.target.setVolume(currentVolume),
             onStateChange: (e) => {
                 isPlaying = (e.data === YT.PlayerState.PLAYING);
+                if (e.data === YT.PlayerState.PLAYING) {
+                    buttonTT.play();       
+                } else if (e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) {
+                    buttonTT.reverse();
+                }
             }
             
         }
@@ -193,4 +201,35 @@ document.getElementById("volumeslide").addEventListener("input", (e) => {
     currentVolume = Number(e.currentTarget.value);
     if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(currentVolume);
 });
+
+const button = document.querySelector('#play-button');
+
+const buttonTT = gsap.timeline({ paused: true });
+
+buttonTT.to('#play-button', {
+  duration: 1,
+  morphSVG: { shape: '.pauseb' },
+  ease: 'elastic.inOut',
+});
+
+button.addEventListener('click', function () {
+  if (buttonTT.time() > 0 && !buttonTT.reversed()) {
+    buttonTT.reverse();
+  } else {
+    buttonTT.play();
+  }
+}); 
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
